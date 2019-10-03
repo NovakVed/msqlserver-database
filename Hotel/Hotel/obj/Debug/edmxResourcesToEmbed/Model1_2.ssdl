@@ -1,0 +1,369 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="HotelBazaModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Apartmani">
+    <Key>
+      <PropertyRef Name="Id_apartmana" />
+    </Key>
+    <Property Name="Id_apartmana" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Adresa" Type="nchar" MaxLength="50" Nullable="false" />
+    <Property Name="Broj soba" Type="int" Nullable="false" />
+    <Property Name="Pogled na more" Type="nchar" MaxLength="2" Nullable="false" />
+    <Property Name="Perilica" Type="nchar" MaxLength="2" Nullable="false" />
+    <Property Name="Terasa" Type="nchar" MaxLength="2" Nullable="false" />
+    <Property Name="Cijena/noć" Type="money" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Gost">
+    <Key>
+      <PropertyRef Name="Id_gosta" />
+    </Key>
+    <Property Name="Id_gosta" Type="int" Nullable="false" />
+    <Property Name="Ime" Type="nchar" MaxLength="20" Nullable="false" />
+    <Property Name="Prezime" Type="nchar" MaxLength="30" Nullable="false" />
+    <Property Name="Adresa" Type="nchar" MaxLength="40" />
+    <Property Name="Državljanstvo" Type="nchar" MaxLength="50" Nullable="false" />
+    <Property Name="Godište" Type="date" Nullable="false" />
+    <Property Name="E-mail" Type="nchar" MaxLength="30" />
+    <Property Name="Id_referal" Type="int" />
+  </EntityType>
+  <EntityType Name="Hotel">
+    <Key>
+      <PropertyRef Name="Id_hotel" />
+    </Key>
+    <Property Name="Id_hotel" Type="int" Nullable="false" />
+    <Property Name="Ime" Type="nchar" MaxLength="20" Nullable="false" />
+    <Property Name="Adresa" Type="nchar" MaxLength="30" Nullable="false" />
+    <Property Name="Broj telefona" Type="nchar" MaxLength="20" Nullable="false" />
+    <Property Name="E-mail" Type="nchar" MaxLength="20" Nullable="false" />
+    <Property Name="Grad" Type="nchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="Nacin_placanja">
+    <Key>
+      <PropertyRef Name="Id_placanja" />
+    </Key>
+    <Property Name="Id_placanja" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Opis" Type="nchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'C:\USERS\KORSNIK\DESKTOP\REPOS\HOTEL\HOTEL\HOTELBAZA.MDF.dbo.PlanRada' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="PlanRada">
+    <Key>
+      <PropertyRef Name="Id_zaposlenika" />
+      <PropertyRef Name="Id_radno_vrijeme" />
+      <PropertyRef Name="Datum" />
+    </Key>
+    <Property Name="Id_zaposlenika" Type="int" Nullable="false" />
+    <Property Name="Id_radno_vrijeme" Type="int" Nullable="false" />
+    <Property Name="Datum" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Popusti">
+    <Key>
+      <PropertyRef Name="Id_popust" />
+    </Key>
+    <Property Name="Id_popust" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Opis popusta" Type="nchar" MaxLength="100" />
+    <Property Name="Postotak skinute cijene" Type="decimal" Precision="2" Scale="2" />
+  </EntityType>
+  <EntityType Name="Racun">
+    <Key>
+      <PropertyRef Name="Id_racuna" />
+    </Key>
+    <Property Name="Id_racuna" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Ukupan trošak" Type="money" />
+    <Property Name="Id_popust" Type="int" />
+    <Property Name="Id_zaposlenika" Type="int" Nullable="false" />
+    <Property Name="Datum plačanja" Type="datetime" Nullable="false" />
+    <Property Name="Id_rezervacije" Type="int" Nullable="false" />
+    <Property Name="Id_nacin_placanja" Type="int" />
+  </EntityType>
+  <EntityType Name="RadnoVrijeme">
+    <Key>
+      <PropertyRef Name="Id_radno_vrijeme" />
+    </Key>
+    <Property Name="Id_radno_vrijeme" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Pocetak" Type="time" Precision="7" Nullable="false" />
+    <Property Name="Kraj" Type="time" Precision="7" Nullable="false" />
+    <Property Name="Opis" Type="nchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="Rezervacije">
+    <Key>
+      <PropertyRef Name="Id_rezervacija" />
+    </Key>
+    <Property Name="Id_rezervacija" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Id_soba" Type="int" />
+    <Property Name="Id_apartman" Type="int" />
+    <Property Name="Id_gosta" Type="int" Nullable="false" />
+    <Property Name="Datum check-in" Type="date" Nullable="false" />
+    <Property Name="Datum check-out" Type="date" Nullable="false" />
+    <Property Name="Id_ugovaranje_putem" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Soba">
+    <Key>
+      <PropertyRef Name="Id_sobe" />
+    </Key>
+    <Property Name="Id_sobe" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Broj kreveta" Type="smallint" Nullable="false" />
+    <Property Name="Terasa" Type="nchar" MaxLength="2" Nullable="false" />
+    <Property Name="Pogled na more" Type="nchar" MaxLength="2" />
+    <Property Name="Lift" Type="nchar" MaxLength="2" Nullable="false" />
+    <Property Name="Perilica" Type="nchar" MaxLength="2" Nullable="false" />
+    <Property Name="Cijena/noć" Type="money" Nullable="false" />
+    <Property Name="Broj_sobe" Type="smallint" Nullable="false" />
+    <Property Name="Id_hotel" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Ugovaranje_putem">
+    <Key>
+      <PropertyRef Name="Id_rezervacija_putem" />
+    </Key>
+    <Property Name="Id_rezervacija_putem" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Naziv" Type="nchar" MaxLength="20" Nullable="false" />
+    <Property Name="Opis" Type="nchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="Uloge">
+    <Key>
+      <PropertyRef Name="Id_uloge" />
+    </Key>
+    <Property Name="Id_uloge" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Uloga" Type="nchar" MaxLength="30" Nullable="false" />
+    <Property Name="Opis uloge" Type="nchar" MaxLength="1000" />
+  </EntityType>
+  <EntityType Name="Zaposlenik">
+    <Key>
+      <PropertyRef Name="Id_zaposlenika" />
+    </Key>
+    <Property Name="Id_zaposlenika" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Ime" Type="nchar" MaxLength="10" Nullable="false" />
+    <Property Name="Prezime" Type="nchar" MaxLength="20" Nullable="false" />
+    <Property Name="Email" Type="nchar" MaxLength="50" Nullable="false" />
+    <Property Name="Adresa" Type="nchar" MaxLength="50" />
+    <Property Name="Id_uloga" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_Soba_Hotel">
+    <End Role="Hotel" Type="Self.Hotel" Multiplicity="1" />
+    <End Role="Soba" Type="Self.Soba" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hotel">
+        <PropertyRef Name="Id_hotel" />
+      </Principal>
+      <Dependent Role="Soba">
+        <PropertyRef Name="Id_hotel" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Zaposlenik_ToTable">
+    <End Role="Uloge" Type="Self.Uloge" Multiplicity="1" />
+    <End Role="Zaposlenik" Type="Self.Zaposlenik" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Uloge">
+        <PropertyRef Name="Id_uloge" />
+      </Principal>
+      <Dependent Role="Zaposlenik">
+        <PropertyRef Name="Id_uloga" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="IdApartmanFK">
+    <End Role="Apartmani" Type="Self.Apartmani" Multiplicity="0..1" />
+    <End Role="Rezervacije" Type="Self.Rezervacije" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Apartmani">
+        <PropertyRef Name="Id_apartmana" />
+      </Principal>
+      <Dependent Role="Rezervacije">
+        <PropertyRef Name="Id_apartman" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="IdGostaFK">
+    <End Role="Gost" Type="Self.Gost" Multiplicity="1" />
+    <End Role="Rezervacije" Type="Self.Rezervacije" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gost">
+        <PropertyRef Name="Id_gosta" />
+      </Principal>
+      <Dependent Role="Rezervacije">
+        <PropertyRef Name="Id_gosta" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="IdSobaFK">
+    <End Role="Soba" Type="Self.Soba" Multiplicity="0..1" />
+    <End Role="Rezervacije" Type="Self.Rezervacije" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Soba">
+        <PropertyRef Name="Id_sobe" />
+      </Principal>
+      <Dependent Role="Rezervacije">
+        <PropertyRef Name="Id_soba" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="IdUgovaranjePutemFK">
+    <End Role="Ugovaranje_putem" Type="Self.Ugovaranje_putem" Multiplicity="1" />
+    <End Role="Rezervacije" Type="Self.Rezervacije" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ugovaranje_putem">
+        <PropertyRef Name="Id_rezervacija_putem" />
+      </Principal>
+      <Dependent Role="Rezervacije">
+        <PropertyRef Name="Id_ugovaranje_putem" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="nacin_placanjaFK">
+    <End Role="Nacin_placanja" Type="Self.Nacin_placanja" Multiplicity="0..1" />
+    <End Role="Racun" Type="Self.Racun" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Nacin_placanja">
+        <PropertyRef Name="Id_placanja" />
+      </Principal>
+      <Dependent Role="Racun">
+        <PropertyRef Name="Id_nacin_placanja" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="popustFK">
+    <End Role="Popusti" Type="Self.Popusti" Multiplicity="0..1" />
+    <End Role="Racun" Type="Self.Racun" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Popusti">
+        <PropertyRef Name="Id_popust" />
+      </Principal>
+      <Dependent Role="Racun">
+        <PropertyRef Name="Id_popust" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="radnoVrijemeFK">
+    <End Role="RadnoVrijeme" Type="Self.RadnoVrijeme" Multiplicity="1" />
+    <End Role="PlanRada" Type="Self.PlanRada" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RadnoVrijeme">
+        <PropertyRef Name="Id_radno_vrijeme" />
+      </Principal>
+      <Dependent Role="PlanRada">
+        <PropertyRef Name="Id_radno_vrijeme" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="referalFK">
+    <End Role="Gost" Type="Self.Gost" Multiplicity="0..1" />
+    <End Role="Gost1" Type="Self.Gost" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gost">
+        <PropertyRef Name="Id_gosta" />
+      </Principal>
+      <Dependent Role="Gost1">
+        <PropertyRef Name="Id_referal" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="rezervacijeFK">
+    <End Role="Rezervacije" Type="Self.Rezervacije" Multiplicity="1" />
+    <End Role="Racun" Type="Self.Racun" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rezervacije">
+        <PropertyRef Name="Id_rezervacija" />
+      </Principal>
+      <Dependent Role="Racun">
+        <PropertyRef Name="Id_rezervacije" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ulogeZaposlenikaFK">
+    <End Role="Zaposlenik" Type="Self.Zaposlenik" Multiplicity="1" />
+    <End Role="PlanRada" Type="Self.PlanRada" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Zaposlenik">
+        <PropertyRef Name="Id_zaposlenika" />
+      </Principal>
+      <Dependent Role="PlanRada">
+        <PropertyRef Name="Id_zaposlenika" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="zaposlenikiFK">
+    <End Role="Zaposlenik" Type="Self.Zaposlenik" Multiplicity="1" />
+    <End Role="Racun" Type="Self.Racun" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Zaposlenik">
+        <PropertyRef Name="Id_zaposlenika" />
+      </Principal>
+      <Dependent Role="Racun">
+        <PropertyRef Name="Id_zaposlenika" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="HotelBazaModelStoreContainer">
+    <EntitySet Name="Apartmani" EntityType="Self.Apartmani" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Gost" EntityType="Self.Gost" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Hotel" EntityType="Self.Hotel" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Nacin_placanja" EntityType="Self.Nacin_placanja" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Popusti" EntityType="Self.Popusti" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Racun" EntityType="Self.Racun" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="RadnoVrijeme" EntityType="Self.RadnoVrijeme" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Rezervacije" EntityType="Self.Rezervacije" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Soba" EntityType="Self.Soba" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Ugovaranje_putem" EntityType="Self.Ugovaranje_putem" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Uloge" EntityType="Self.Uloge" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Zaposlenik" EntityType="Self.Zaposlenik" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PlanRada" EntityType="Self.PlanRada" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [PlanRada].[Id_zaposlenika] AS [Id_zaposlenika], 
+    [PlanRada].[Id_radno_vrijeme] AS [Id_radno_vrijeme], 
+    [PlanRada].[Datum] AS [Datum]
+    FROM [dbo].[PlanRada] AS [PlanRada]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_Soba_Hotel" Association="Self.FK_Soba_Hotel">
+      <End Role="Hotel" EntitySet="Hotel" />
+      <End Role="Soba" EntitySet="Soba" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Zaposlenik_ToTable" Association="Self.FK_Zaposlenik_ToTable">
+      <End Role="Uloge" EntitySet="Uloge" />
+      <End Role="Zaposlenik" EntitySet="Zaposlenik" />
+    </AssociationSet>
+    <AssociationSet Name="IdApartmanFK" Association="Self.IdApartmanFK">
+      <End Role="Apartmani" EntitySet="Apartmani" />
+      <End Role="Rezervacije" EntitySet="Rezervacije" />
+    </AssociationSet>
+    <AssociationSet Name="IdGostaFK" Association="Self.IdGostaFK">
+      <End Role="Gost" EntitySet="Gost" />
+      <End Role="Rezervacije" EntitySet="Rezervacije" />
+    </AssociationSet>
+    <AssociationSet Name="IdSobaFK" Association="Self.IdSobaFK">
+      <End Role="Soba" EntitySet="Soba" />
+      <End Role="Rezervacije" EntitySet="Rezervacije" />
+    </AssociationSet>
+    <AssociationSet Name="IdUgovaranjePutemFK" Association="Self.IdUgovaranjePutemFK">
+      <End Role="Ugovaranje_putem" EntitySet="Ugovaranje_putem" />
+      <End Role="Rezervacije" EntitySet="Rezervacije" />
+    </AssociationSet>
+    <AssociationSet Name="nacin_placanjaFK" Association="Self.nacin_placanjaFK">
+      <End Role="Nacin_placanja" EntitySet="Nacin_placanja" />
+      <End Role="Racun" EntitySet="Racun" />
+    </AssociationSet>
+    <AssociationSet Name="popustFK" Association="Self.popustFK">
+      <End Role="Popusti" EntitySet="Popusti" />
+      <End Role="Racun" EntitySet="Racun" />
+    </AssociationSet>
+    <AssociationSet Name="radnoVrijemeFK" Association="Self.radnoVrijemeFK">
+      <End Role="RadnoVrijeme" EntitySet="RadnoVrijeme" />
+      <End Role="PlanRada" EntitySet="PlanRada" />
+    </AssociationSet>
+    <AssociationSet Name="referalFK" Association="Self.referalFK">
+      <End Role="Gost" EntitySet="Gost" />
+      <End Role="Gost1" EntitySet="Gost" />
+    </AssociationSet>
+    <AssociationSet Name="rezervacijeFK" Association="Self.rezervacijeFK">
+      <End Role="Rezervacije" EntitySet="Rezervacije" />
+      <End Role="Racun" EntitySet="Racun" />
+    </AssociationSet>
+    <AssociationSet Name="ulogeZaposlenikaFK" Association="Self.ulogeZaposlenikaFK">
+      <End Role="Zaposlenik" EntitySet="Zaposlenik" />
+      <End Role="PlanRada" EntitySet="PlanRada" />
+    </AssociationSet>
+    <AssociationSet Name="zaposlenikiFK" Association="Self.zaposlenikiFK">
+      <End Role="Zaposlenik" EntitySet="Zaposlenik" />
+      <End Role="Racun" EntitySet="Racun" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

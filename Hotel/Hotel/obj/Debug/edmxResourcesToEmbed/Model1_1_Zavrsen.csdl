@@ -1,0 +1,500 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="HotelBazaModel1" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Apartmani">
+    <Key>
+      <PropertyRef Name="Id_apartmana" />
+    </Key>
+    <Property Name="Id_apartmana" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Adresa" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Broj_soba" Type="Int32" Nullable="false" />
+    <Property Name="Pogled_na_more" Type="String" MaxLength="2" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Perilica" Type="String" MaxLength="2" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Terasa" Type="String" MaxLength="2" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Cijena_noć" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <NavigationProperty Name="Rezervacije" Relationship="Self.IdApartmanFK" FromRole="Apartmani" ToRole="Rezervacije" />
+  </EntityType>
+  <EntityType Name="Drzava">
+    <Key>
+      <PropertyRef Name="Id_drzave" />
+    </Key>
+    <Property Name="Id_drzave" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Naziv_drzave" Type="String" MaxLength="40" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Drzavljanstvo" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Grad" Relationship="Self.FK_Grad_ToTable" FromRole="Drzava" ToRole="Grad" />
+    <NavigationProperty Name="Korisnik" Relationship="Self.FK_Korisnik_ToTable" FromRole="Drzava" ToRole="Korisnik" />
+  </EntityType>
+  <EntityType Name="Gost">
+    <Key>
+      <PropertyRef Name="Id_gosta" />
+    </Key>
+    <Property Name="Id_gosta" Type="Int32" Nullable="false" />
+    <Property Name="Id_referal" Type="Int32" />
+    <Property Name="Id_korisnik" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Korisnik" Relationship="Self.gost_korisnikFK" FromRole="Gost" ToRole="Korisnik" />
+    <NavigationProperty Name="Rezervacije" Relationship="Self.IdGostaFK" FromRole="Gost" ToRole="Rezervacije" />
+    <NavigationProperty Name="Gost1" Relationship="Self.referalFK" FromRole="Gost" ToRole="Gost1" />
+    <NavigationProperty Name="Gost2" Relationship="Self.referalFK" FromRole="Gost1" ToRole="Gost" />
+  </EntityType>
+  <EntityType Name="Grad">
+    <Key>
+      <PropertyRef Name="Id_grad" />
+    </Key>
+    <Property Name="Id_grad" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Ime_grada" Type="String" MaxLength="30" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Postanski_broj" Type="Int32" />
+    <Property Name="Id_drzave" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Drzava" Relationship="Self.FK_Grad_ToTable" FromRole="Grad" ToRole="Drzava" />
+    <NavigationProperty Name="Hotel" Relationship="Self.FK_Hotel_ToTable" FromRole="Grad" ToRole="Hotel" />
+  </EntityType>
+  <EntityType Name="Hotel">
+    <Key>
+      <PropertyRef Name="Id_hotel" />
+    </Key>
+    <Property Name="Id_hotel" Type="Int32" Nullable="false" />
+    <Property Name="Ime" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Adresa" Type="String" MaxLength="30" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Broj_telefona" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="E_mail" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Id_grad" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Grad" Relationship="Self.FK_Hotel_ToTable" FromRole="Hotel" ToRole="Grad" />
+    <NavigationProperty Name="Soba" Relationship="Self.FK_Soba_Hotel" FromRole="Hotel" ToRole="Soba" />
+  </EntityType>
+  <EntityType Name="Korisnik">
+    <Key>
+      <PropertyRef Name="Id_korisnik" />
+    </Key>
+    <Property Name="Id_korisnik" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Ime" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Prezime" Type="String" MaxLength="30" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Adresa" Type="String" MaxLength="40" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Email" Type="String" MaxLength="40" FixedLength="true" Unicode="true" />
+    <Property Name="Godište" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Id_drzavljanstvo" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Drzava" Relationship="Self.FK_Korisnik_ToTable" FromRole="Korisnik" ToRole="Drzava" />
+    <NavigationProperty Name="Gost" Relationship="Self.gost_korisnikFK" FromRole="Korisnik" ToRole="Gost" />
+    <NavigationProperty Name="Zaposlenik" Relationship="Self.zaposlenik_korisnikFK" FromRole="Korisnik" ToRole="Zaposlenik" />
+  </EntityType>
+  <EntityType Name="Nacin_placanja">
+    <Key>
+      <PropertyRef Name="Id_placanja" />
+    </Key>
+    <Property Name="Id_placanja" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Opis" Type="String" MaxLength="100" FixedLength="true" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Racun" Relationship="Self.nacin_placanjaFK" FromRole="Nacin_placanja" ToRole="Racun" />
+  </EntityType>
+  <EntityType Name="PlanRada">
+    <Key>
+      <PropertyRef Name="Id_plan_rada" />
+    </Key>
+    <Property Name="Id_plan_rada" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Id_radno_vrijeme" Type="Int32" Nullable="false" />
+    <Property Name="Id_zaposlenika" Type="Int32" Nullable="false" />
+    <Property Name="Datum" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="Zaposlenik" Relationship="Self.FK_PlanRada_ToTable" FromRole="PlanRada" ToRole="Zaposlenik" />
+    <NavigationProperty Name="RadnoVrijeme" Relationship="Self.FK_PlanRada_ToTable_1" FromRole="PlanRada" ToRole="RadnoVrijeme" />
+  </EntityType>
+  <EntityType Name="Popusti">
+    <Key>
+      <PropertyRef Name="Id_popust" />
+    </Key>
+    <Property Name="Id_popust" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Opis_popusta" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+    <Property Name="Postotak_skinute_cijene" Type="Decimal" Precision="2" Scale="2" />
+    <NavigationProperty Name="Racun" Relationship="Self.popustFK" FromRole="Popusti" ToRole="Racun" />
+  </EntityType>
+  <EntityType Name="Racun">
+    <Key>
+      <PropertyRef Name="Id_racuna" />
+    </Key>
+    <Property Name="Id_racuna" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Ukupan_trošak" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="Id_popust" Type="Int32" />
+    <Property Name="Id_zaposlenika" Type="Int32" Nullable="false" />
+    <Property Name="Datum_plačanja" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Id_rezervacije" Type="Int32" Nullable="false" />
+    <Property Name="Id_nacin_placanja" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Nacin_placanja" Relationship="Self.nacin_placanjaFK" FromRole="Racun" ToRole="Nacin_placanja" />
+    <NavigationProperty Name="Popusti" Relationship="Self.popustFK" FromRole="Racun" ToRole="Popusti" />
+    <NavigationProperty Name="Rezervacije" Relationship="Self.rezervacijeFK" FromRole="Racun" ToRole="Rezervacije" />
+    <NavigationProperty Name="Zaposlenik" Relationship="Self.zaposlenikFK" FromRole="Racun" ToRole="Zaposlenik" />
+  </EntityType>
+  <EntityType Name="RadnoVrijeme">
+    <Key>
+      <PropertyRef Name="Id_radno_vrijeme" />
+    </Key>
+    <Property Name="Id_radno_vrijeme" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Pocetak" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="Kraj" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="Opis" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="PlanRada" Relationship="Self.FK_PlanRada_ToTable_1" FromRole="RadnoVrijeme" ToRole="PlanRada" />
+  </EntityType>
+  <EntityType Name="Rezervacije">
+    <Key>
+      <PropertyRef Name="Id_rezervacija" />
+    </Key>
+    <Property Name="Id_rezervacija" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Id_soba" Type="Int32" />
+    <Property Name="Id_apartman" Type="Int32" />
+    <Property Name="Id_gosta" Type="Int32" Nullable="false" />
+    <Property Name="Datum_check_in" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Datum_check_out" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="Id_ugovaranje_putem" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Apartmani" Relationship="Self.IdApartmanFK" FromRole="Rezervacije" ToRole="Apartmani" />
+    <NavigationProperty Name="Gost" Relationship="Self.IdGostaFK" FromRole="Rezervacije" ToRole="Gost" />
+    <NavigationProperty Name="Racun" Relationship="Self.rezervacijeFK" FromRole="Rezervacije" ToRole="Racun" />
+    <NavigationProperty Name="Soba" Relationship="Self.IdSobaFK" FromRole="Rezervacije" ToRole="Soba" />
+    <NavigationProperty Name="Ugovaranje_putem" Relationship="Self.IdUgovaranjePutemFK" FromRole="Rezervacije" ToRole="Ugovaranje_putem" />
+  </EntityType>
+  <EntityType Name="Soba">
+    <Key>
+      <PropertyRef Name="Id_sobe" />
+    </Key>
+    <Property Name="Id_sobe" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Broj_kreveta" Type="Int16" Nullable="false" />
+    <Property Name="Terasa" Type="String" MaxLength="2" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Pogled_na_more" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
+    <Property Name="Lift" Type="String" MaxLength="2" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Perilica" Type="String" MaxLength="2" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Cijena_noć" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="Broj_sobe" Type="Int16" Nullable="false" />
+    <Property Name="Id_hotel" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Hotel" Relationship="Self.FK_Soba_Hotel" FromRole="Soba" ToRole="Hotel" />
+    <NavigationProperty Name="Rezervacije" Relationship="Self.IdSobaFK" FromRole="Soba" ToRole="Rezervacije" />
+  </EntityType>
+  <EntityType Name="Ugovaranje_putem">
+    <Key>
+      <PropertyRef Name="Id_rezervacija_putem" />
+    </Key>
+    <Property Name="Id_rezervacija_putem" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Naziv" Type="String" MaxLength="20" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Opis" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="Rezervacije" Relationship="Self.IdUgovaranjePutemFK" FromRole="Ugovaranje_putem" ToRole="Rezervacije" />
+  </EntityType>
+  <EntityType Name="Uloge">
+    <Key>
+      <PropertyRef Name="Id_uloge" />
+    </Key>
+    <Property Name="Id_uloge" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Uloga" Type="String" MaxLength="30" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="Opis_uloge" Type="String" MaxLength="1000" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="Zaposlenik" Relationship="Self.ulogaFK" FromRole="Uloge" ToRole="Zaposlenik" />
+  </EntityType>
+  <EntityType Name="Zaposlenik">
+    <Key>
+      <PropertyRef Name="Id_zaposlenika" />
+    </Key>
+    <Property Name="Id_zaposlenika" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Id_uloga" Type="Int32" Nullable="false" />
+    <Property Name="Id_korisnik" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Korisnik" Relationship="Self.zaposlenik_korisnikFK" FromRole="Zaposlenik" ToRole="Korisnik" />
+    <NavigationProperty Name="PlanRada" Relationship="Self.FK_PlanRada_ToTable" FromRole="Zaposlenik" ToRole="PlanRada" />
+    <NavigationProperty Name="Racun" Relationship="Self.zaposlenikFK" FromRole="Zaposlenik" ToRole="Racun" />
+    <NavigationProperty Name="Uloge" Relationship="Self.ulogaFK" FromRole="Zaposlenik" ToRole="Uloge" />
+  </EntityType>
+  <Association Name="IdApartmanFK">
+    <End Role="Apartmani" Type="Self.Apartmani" Multiplicity="0..1" />
+    <End Role="Rezervacije" Type="Self.Rezervacije" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Apartmani">
+        <PropertyRef Name="Id_apartmana" />
+      </Principal>
+      <Dependent Role="Rezervacije">
+        <PropertyRef Name="Id_apartman" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Grad_ToTable">
+    <End Role="Drzava" Type="Self.Drzava" Multiplicity="1" />
+    <End Role="Grad" Type="Self.Grad" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Drzava">
+        <PropertyRef Name="Id_drzave" />
+      </Principal>
+      <Dependent Role="Grad">
+        <PropertyRef Name="Id_drzave" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Korisnik_ToTable">
+    <End Role="Drzava" Type="Self.Drzava" Multiplicity="1" />
+    <End Role="Korisnik" Type="Self.Korisnik" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Drzava">
+        <PropertyRef Name="Id_drzave" />
+      </Principal>
+      <Dependent Role="Korisnik">
+        <PropertyRef Name="Id_drzavljanstvo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="gost_korisnikFK">
+    <End Role="Korisnik" Type="Self.Korisnik" Multiplicity="1" />
+    <End Role="Gost" Type="Self.Gost" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Korisnik">
+        <PropertyRef Name="Id_korisnik" />
+      </Principal>
+      <Dependent Role="Gost">
+        <PropertyRef Name="Id_korisnik" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="IdGostaFK">
+    <End Role="Gost" Type="Self.Gost" Multiplicity="1" />
+    <End Role="Rezervacije" Type="Self.Rezervacije" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gost">
+        <PropertyRef Name="Id_gosta" />
+      </Principal>
+      <Dependent Role="Rezervacije">
+        <PropertyRef Name="Id_gosta" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="referalFK">
+    <End Role="Gost" Type="Self.Gost" Multiplicity="0..1" />
+    <End Role="Gost1" Type="Self.Gost" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Gost">
+        <PropertyRef Name="Id_gosta" />
+      </Principal>
+      <Dependent Role="Gost1">
+        <PropertyRef Name="Id_referal" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Hotel_ToTable">
+    <End Role="Grad" Type="Self.Grad" Multiplicity="1" />
+    <End Role="Hotel" Type="Self.Hotel" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Grad">
+        <PropertyRef Name="Id_grad" />
+      </Principal>
+      <Dependent Role="Hotel">
+        <PropertyRef Name="Id_grad" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Soba_Hotel">
+    <End Role="Hotel" Type="Self.Hotel" Multiplicity="1" />
+    <End Role="Soba" Type="Self.Soba" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Hotel">
+        <PropertyRef Name="Id_hotel" />
+      </Principal>
+      <Dependent Role="Soba">
+        <PropertyRef Name="Id_hotel" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="zaposlenik_korisnikFK">
+    <End Role="Korisnik" Type="Self.Korisnik" Multiplicity="1" />
+    <End Role="Zaposlenik" Type="Self.Zaposlenik" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Korisnik">
+        <PropertyRef Name="Id_korisnik" />
+      </Principal>
+      <Dependent Role="Zaposlenik">
+        <PropertyRef Name="Id_korisnik" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="nacin_placanjaFK">
+    <End Role="Nacin_placanja" Type="Self.Nacin_placanja" Multiplicity="1" />
+    <End Role="Racun" Type="Self.Racun" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Nacin_placanja">
+        <PropertyRef Name="Id_placanja" />
+      </Principal>
+      <Dependent Role="Racun">
+        <PropertyRef Name="Id_nacin_placanja" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PlanRada_ToTable">
+    <End Role="Zaposlenik" Type="Self.Zaposlenik" Multiplicity="1" />
+    <End Role="PlanRada" Type="Self.PlanRada" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Zaposlenik">
+        <PropertyRef Name="Id_zaposlenika" />
+      </Principal>
+      <Dependent Role="PlanRada">
+        <PropertyRef Name="Id_zaposlenika" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_PlanRada_ToTable_1">
+    <End Role="RadnoVrijeme" Type="Self.RadnoVrijeme" Multiplicity="1" />
+    <End Role="PlanRada" Type="Self.PlanRada" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="RadnoVrijeme">
+        <PropertyRef Name="Id_radno_vrijeme" />
+      </Principal>
+      <Dependent Role="PlanRada">
+        <PropertyRef Name="Id_radno_vrijeme" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="popustFK">
+    <End Role="Popusti" Type="Self.Popusti" Multiplicity="0..1" />
+    <End Role="Racun" Type="Self.Racun" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Popusti">
+        <PropertyRef Name="Id_popust" />
+      </Principal>
+      <Dependent Role="Racun">
+        <PropertyRef Name="Id_popust" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="rezervacijeFK">
+    <End Role="Rezervacije" Type="Self.Rezervacije" Multiplicity="1" />
+    <End Role="Racun" Type="Self.Racun" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Rezervacije">
+        <PropertyRef Name="Id_rezervacija" />
+      </Principal>
+      <Dependent Role="Racun">
+        <PropertyRef Name="Id_rezervacije" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="zaposlenikFK">
+    <End Role="Zaposlenik" Type="Self.Zaposlenik" Multiplicity="1" />
+    <End Role="Racun" Type="Self.Racun" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Zaposlenik">
+        <PropertyRef Name="Id_zaposlenika" />
+      </Principal>
+      <Dependent Role="Racun">
+        <PropertyRef Name="Id_zaposlenika" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="IdSobaFK">
+    <End Role="Soba" Type="Self.Soba" Multiplicity="0..1" />
+    <End Role="Rezervacije" Type="Self.Rezervacije" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Soba">
+        <PropertyRef Name="Id_sobe" />
+      </Principal>
+      <Dependent Role="Rezervacije">
+        <PropertyRef Name="Id_soba" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="IdUgovaranjePutemFK">
+    <End Role="Ugovaranje_putem" Type="Self.Ugovaranje_putem" Multiplicity="1" />
+    <End Role="Rezervacije" Type="Self.Rezervacije" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Ugovaranje_putem">
+        <PropertyRef Name="Id_rezervacija_putem" />
+      </Principal>
+      <Dependent Role="Rezervacije">
+        <PropertyRef Name="Id_ugovaranje_putem" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ulogaFK">
+    <End Role="Uloge" Type="Self.Uloge" Multiplicity="1" />
+    <End Role="Zaposlenik" Type="Self.Zaposlenik" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Uloge">
+        <PropertyRef Name="Id_uloge" />
+      </Principal>
+      <Dependent Role="Zaposlenik">
+        <PropertyRef Name="Id_uloga" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="HotelBazaEntities11" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Apartmani" EntityType="Self.Apartmani" />
+    <EntitySet Name="Drzava" EntityType="Self.Drzava" />
+    <EntitySet Name="Gost" EntityType="Self.Gost" />
+    <EntitySet Name="Grad" EntityType="Self.Grad" />
+    <EntitySet Name="Hotel" EntityType="Self.Hotel" />
+    <EntitySet Name="Korisnik" EntityType="Self.Korisnik" />
+    <EntitySet Name="Nacin_placanja" EntityType="Self.Nacin_placanja" />
+    <EntitySet Name="PlanRada" EntityType="Self.PlanRada" />
+    <EntitySet Name="Popusti" EntityType="Self.Popusti" />
+    <EntitySet Name="Racun" EntityType="Self.Racun" />
+    <EntitySet Name="RadnoVrijeme" EntityType="Self.RadnoVrijeme" />
+    <EntitySet Name="Rezervacije" EntityType="Self.Rezervacije" />
+    <EntitySet Name="Soba" EntityType="Self.Soba" />
+    <EntitySet Name="Ugovaranje_putem" EntityType="Self.Ugovaranje_putem" />
+    <EntitySet Name="Uloge" EntityType="Self.Uloge" />
+    <EntitySet Name="Zaposlenik" EntityType="Self.Zaposlenik" />
+    <AssociationSet Name="IdApartmanFK" Association="Self.IdApartmanFK">
+      <End Role="Apartmani" EntitySet="Apartmani" />
+      <End Role="Rezervacije" EntitySet="Rezervacije" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Grad_ToTable" Association="Self.FK_Grad_ToTable">
+      <End Role="Drzava" EntitySet="Drzava" />
+      <End Role="Grad" EntitySet="Grad" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Korisnik_ToTable" Association="Self.FK_Korisnik_ToTable">
+      <End Role="Drzava" EntitySet="Drzava" />
+      <End Role="Korisnik" EntitySet="Korisnik" />
+    </AssociationSet>
+    <AssociationSet Name="gost_korisnikFK" Association="Self.gost_korisnikFK">
+      <End Role="Korisnik" EntitySet="Korisnik" />
+      <End Role="Gost" EntitySet="Gost" />
+    </AssociationSet>
+    <AssociationSet Name="IdGostaFK" Association="Self.IdGostaFK">
+      <End Role="Gost" EntitySet="Gost" />
+      <End Role="Rezervacije" EntitySet="Rezervacije" />
+    </AssociationSet>
+    <AssociationSet Name="referalFK" Association="Self.referalFK">
+      <End Role="Gost" EntitySet="Gost" />
+      <End Role="Gost1" EntitySet="Gost" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Hotel_ToTable" Association="Self.FK_Hotel_ToTable">
+      <End Role="Grad" EntitySet="Grad" />
+      <End Role="Hotel" EntitySet="Hotel" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Soba_Hotel" Association="Self.FK_Soba_Hotel">
+      <End Role="Hotel" EntitySet="Hotel" />
+      <End Role="Soba" EntitySet="Soba" />
+    </AssociationSet>
+    <AssociationSet Name="zaposlenik_korisnikFK" Association="Self.zaposlenik_korisnikFK">
+      <End Role="Korisnik" EntitySet="Korisnik" />
+      <End Role="Zaposlenik" EntitySet="Zaposlenik" />
+    </AssociationSet>
+    <AssociationSet Name="nacin_placanjaFK" Association="Self.nacin_placanjaFK">
+      <End Role="Nacin_placanja" EntitySet="Nacin_placanja" />
+      <End Role="Racun" EntitySet="Racun" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PlanRada_ToTable" Association="Self.FK_PlanRada_ToTable">
+      <End Role="Zaposlenik" EntitySet="Zaposlenik" />
+      <End Role="PlanRada" EntitySet="PlanRada" />
+    </AssociationSet>
+    <AssociationSet Name="FK_PlanRada_ToTable_1" Association="Self.FK_PlanRada_ToTable_1">
+      <End Role="RadnoVrijeme" EntitySet="RadnoVrijeme" />
+      <End Role="PlanRada" EntitySet="PlanRada" />
+    </AssociationSet>
+    <AssociationSet Name="popustFK" Association="Self.popustFK">
+      <End Role="Popusti" EntitySet="Popusti" />
+      <End Role="Racun" EntitySet="Racun" />
+    </AssociationSet>
+    <AssociationSet Name="rezervacijeFK" Association="Self.rezervacijeFK">
+      <End Role="Rezervacije" EntitySet="Rezervacije" />
+      <End Role="Racun" EntitySet="Racun" />
+    </AssociationSet>
+    <AssociationSet Name="zaposlenikFK" Association="Self.zaposlenikFK">
+      <End Role="Zaposlenik" EntitySet="Zaposlenik" />
+      <End Role="Racun" EntitySet="Racun" />
+    </AssociationSet>
+    <AssociationSet Name="IdSobaFK" Association="Self.IdSobaFK">
+      <End Role="Soba" EntitySet="Soba" />
+      <End Role="Rezervacije" EntitySet="Rezervacije" />
+    </AssociationSet>
+    <AssociationSet Name="IdUgovaranjePutemFK" Association="Self.IdUgovaranjePutemFK">
+      <End Role="Ugovaranje_putem" EntitySet="Ugovaranje_putem" />
+      <End Role="Rezervacije" EntitySet="Rezervacije" />
+    </AssociationSet>
+    <AssociationSet Name="ulogaFK" Association="Self.ulogaFK">
+      <End Role="Uloge" EntitySet="Uloge" />
+      <End Role="Zaposlenik" EntitySet="Zaposlenik" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

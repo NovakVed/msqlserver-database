@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="55bc4915fe8d4d80bd8db23168caeabe" Name="Diagram1" ZoomLevel="71">
+        <EntityTypeShape EntityType="HotelBazaModel1.Apartmani" Width="1.5" PointX="10.125" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelBazaModel1.Drzava" Width="1.5" PointX="0.75" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelBazaModel1.Gost" Width="1.5" PointX="5.125" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelBazaModel1.Grad" Width="1.5" PointX="3" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelBazaModel1.Hotel" Width="1.5" PointX="5.25" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelBazaModel1.Korisnik" Width="1.5" PointX="3" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelBazaModel1.Nacin_placanja" Width="1.5" PointX="9.875" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelBazaModel1.PlanRada" Width="1.5" PointX="8.125" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelBazaModel1.Popusti" Width="1.5" PointX="14.125" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelBazaModel1.Racun" Width="1.5" PointX="12" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelBazaModel1.RadnoVrijeme" Width="1.5" PointX="11.75" PointY="12.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelBazaModel1.Rezervacije" Width="1.5" PointX="9.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelBazaModel1.Soba" Width="1.5" PointX="7.5" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelBazaModel1.Ugovaranje_putem" Width="1.5" PointX="12.5" PointY="3.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelBazaModel1.Uloge" Width="1.5" PointX="4.75" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HotelBazaModel1.Zaposlenik" Width="1.5" PointX="7.625" PointY="8.875" IsExpanded="true" />
+        <AssociationConnector Association="HotelBazaModel1.IdApartmanFK" ManuallyRouted="false" />
+        <AssociationConnector Association="HotelBazaModel1.FK_Grad_ToTable" ManuallyRouted="false" />
+        <AssociationConnector Association="HotelBazaModel1.FK_Korisnik_ToTable" ManuallyRouted="false" />
+        <AssociationConnector Association="HotelBazaModel1.gost_korisnikFK" ManuallyRouted="false" />
+        <AssociationConnector Association="HotelBazaModel1.IdGostaFK" ManuallyRouted="false" />
+        <AssociationConnector Association="HotelBazaModel1.referalFK" ManuallyRouted="false" />
+        <AssociationConnector Association="HotelBazaModel1.FK_Hotel_ToTable" ManuallyRouted="false" />
+        <AssociationConnector Association="HotelBazaModel1.FK_Soba_Hotel" ManuallyRouted="false" />
+        <AssociationConnector Association="HotelBazaModel1.zaposlenik_korisnikFK" ManuallyRouted="false" />
+        <AssociationConnector Association="HotelBazaModel1.nacin_placanjaFK" ManuallyRouted="false" />
+        <AssociationConnector Association="HotelBazaModel1.FK_PlanRada_ToTable" ManuallyRouted="false" />
+        <AssociationConnector Association="HotelBazaModel1.FK_PlanRada_ToTable_1" ManuallyRouted="false" />
+        <AssociationConnector Association="HotelBazaModel1.popustFK" ManuallyRouted="false" />
+        <AssociationConnector Association="HotelBazaModel1.rezervacijeFK" ManuallyRouted="false" />
+        <AssociationConnector Association="HotelBazaModel1.zaposlenikFK" ManuallyRouted="false" />
+        <AssociationConnector Association="HotelBazaModel1.IdSobaFK" ManuallyRouted="false" />
+        <AssociationConnector Association="HotelBazaModel1.IdUgovaranjePutemFK" ManuallyRouted="false" />
+        <AssociationConnector Association="HotelBazaModel1.ulogaFK" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
